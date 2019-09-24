@@ -1,12 +1,14 @@
 <template>
-  <div class="hello">
+  <v-content class="landing">
+    <v-container>
     <h1>{{ msg }}</h1>
-  </div>
+    </v-container>
+  </v-content>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'LandingPage',
   props: {
     msg: String
   }
