@@ -11,7 +11,14 @@
         href="https://github.com/vuetifyjs/vuetify/releases/latest"
         target="_blank"
       >
-        <span class="mr-2">Latest Release</span>
+        <span class="mr-2">
+            <v-avatar>
+                <img
+                    src="https://cdn.vuetifyjs.com/images/john.jpg"
+                    alt="John"
+                >
+            </v-avatar>
+        </span>
       </v-btn>
     </v-app-bar>
 </div>
