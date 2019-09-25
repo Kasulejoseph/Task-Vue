@@ -15,25 +15,26 @@
           <v-list-item :key="item.title">
             <template v-slot:default="{ active, toggle }">
               <v-list-item-content>
-                <v-list-item-title v-text="item.title"></v-list-item-title>
-                <v-list-item-subtitle class="text--primary" v-text="item.headline"></v-list-item-subtitle>
-                <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle>
+                <v-list-item-title v-text="item.complete"></v-list-item-title>
+                <v-list-item-subtitle class="text--primary" v-text="item.author"></v-list-item-subtitle>
+                <v-list-item-subtitle v-text="item.desc"></v-list-item-subtitle>
               </v-list-item-content>
 
               <v-list-item-action>
-                <v-list-item-action-text v-text="item.action"></v-list-item-action-text>
+                <v-list-item-action-text v-text="item.createdAt"></v-list-item-action-text>
                 <v-icon
-                  v-if="!active"
+                  v-if="!active && !item.complete "
+
                   color="grey lighten-1"
                 >
-                  star_border
+                  mdi-thumb-down
                 </v-icon>
 
                 <v-icon
                   v-else
-                  color="yellow"
+                  color="green"
                 >
-                  star
+                  mdi-thumb-up
                 </v-icon>
               </v-list-item-action>
             </template>
@@ -51,42 +52,19 @@
 </template>
 
 <script>
-    export default {
-            data: () => ({
-      selected: [2],
-      items: [
-        {
-          action: '15 min',
-          headline: 'Brunch this weekend?',
-          title: 'Ali Connors',
-          subtitle: "I'll be in your neighborhood doing errands this weekend. Do you want to hang out?",
-        },
-        {
-          action: '2 hr',
-          headline: 'Summer BBQ',
-          title: 'me, Scrott, Jennifer',
-          subtitle: "Wish I could come, but I'm out of town this weekend.",
-        },
-        {
-          action: '6 hr',
-          headline: 'Oui oui',
-          title: 'Sandra Adams',
-          subtitle: 'Do you have Paris recommendations? Have you ever been?',
-        },
-        {
-          action: '12 hr',
-          headline: 'Birthday gift',
-          title: 'Trevor Hansen',
-          subtitle: 'Have any ideas about what we should get Heidi for her birthday?',
-        },
-        {
-          action: '18hr',
-          headline: 'Recipe to try',
-          title: 'Britta Holt',
-          subtitle: 'We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
-        },
-      ],
+  export default {
+    data: () => ({
+      selected: [1],
     }),
+
+    created: function() {
+      this.$store.dispatch('GET_TASKS_ACTION')
+    },
+    computed: {
+      items () {
+        return this.$store.getters.GET_TASKS.tasks.data
+      }
+    }
         
     }
 </script>
