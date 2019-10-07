@@ -9,7 +9,8 @@ export default new Vuex.Store({
         count: 0,
         tasks: [],
         user: {},
-        error: {}
+        error: {},
+        loading: false
     },
     mutations: {
         SET_TASKS(state, tasks) {
@@ -20,20 +21,25 @@ export default new Vuex.Store({
         },
         HANDLE_ERROR(state, error) {
             state.error = error
+        },
+        UPDATE_LOADER(state, loader){
+            state.loading = loader
         }
+
     },
     actions: {
-        SIGNUP_ACTION: ({commit}, data) => {            
+        SIGNUP_ACTION: ({commit}, data) => { 
+            commit('UPDATE_LOADER', true)          
             axios.post('https://kasule-task-manager.herokuapp.com/users', data)
             .then((response) => {
                 commit('SIGNUP_USER', response.data)
+                commit('UPDATE_LOADER', true)
                 console.log(response.data);
                 
             })
             .catch((error) => {
-                console.log('data', data);
-                
-                console.log(error.response.data)
+                commit('HANDLE_ERROR', error.response.data)
+                commit('UPDATE_LOADER', false)
             })
         },
         GET_TASKS_ACTION: ({commit}) => {
@@ -59,6 +65,12 @@ export default new Vuex.Store({
         },
         GET_USER(state){
             return state.user
+        },
+        GET_ERROR(state) {
+            return state.error
+        },
+        GET_LOADER(state) {
+            return state.loading
         }
     }
 });

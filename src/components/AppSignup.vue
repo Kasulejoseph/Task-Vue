@@ -9,8 +9,6 @@
       <v-card-text>
         <v-form
         >
-        
-        {{username}}
           <v-text-field 
           label="Username"
           prepend-icon="mdi-account-circle"
@@ -35,38 +33,80 @@
         </v-form>
       </v-card-text>
       <v-divider></v-divider>
-      <v-card-actions>
-        <v-btn color="success"
-        @click="registerUser"
-        >Register</v-btn>
-        <v-spacer></v-spacer>
-        <v-btn color="info">Login</v-btn>
-      </v-card-actions>
+        <AuthButton :registerText="registerText" :loading="loading" @click="registerUser"/>
+          <v-snackbar
+      v-model="snackbar"
+      :bottom="y === 'bottom'"
+      :color="color"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :right="x === 'right'"
+      :timeout="timeout"
+      :top="y === 'top'"
+      :vertical="mode === 'vertical'"
+    >
+       {{errorMessage}}
+      <v-btn
+        dark
+        text
+        @click="snackbar = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
     </v-card>
   </v-app>
 </template>
 
 <script>
+import AuthButton from './AuthButton'
 export default {
+    components:{
+        AuthButton
+    },
     data () {
         return {
             showPassword: false,
             username: '',
             email: '',
-            password: ''
+            password: '',
+            color: 'error',
+            mode: '',
+            snackbar: false,
+            text: 'Hello, I\'m a snackbar',
+            timeout: 6000,
+            x: null,
+            y: 'top',
+            registerText: 'Register',
         }
   },
   methods: {
-      registerUser (){
-          const payload = {
-              name: this.username,
-              email: this.email,
-              password: this.password 
+    registerUser (){
+        const payload = {
+            name: this.username,
+            email: this.email,
+            password: this.password 
+        }
+        this.$store.dispatch('SIGNUP_ACTION', payload)       
+    }
+  },
+  computed: {
+      errorMessage() {
+          if(this.$store.getters.GET_ERROR.status){
+            this.snackbar = true 
+            return this.$store.getters.GET_ERROR.error.split(':')[0]
           }
-          this.$store.dispatch('SIGNUP_ACTION', payload)          
-      }
-  }
-        
+          return 'loading..'
+      },
+    loading() {
+        if(this.$store.getters.GET_LOADER){
+            this.registerText = ''
+            return this.$store.getters.GET_LOADER
+        }
+        this.registerText = 'Register'
+    } 
+      
+  },    
     }
 </script>
 
