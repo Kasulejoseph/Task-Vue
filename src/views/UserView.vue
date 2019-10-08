@@ -2,22 +2,19 @@
     <v-app color="white" class="hime">
     <v-card d-flex align-content-space-around flex-wrap>
         <NavBar/>
-        <Signup/>
+        <user-auth></user-auth>
     </v-card>
     </v-app>
 </template>
 <script>
-import Signup from '@/components/AppSignup'
+import UserAuth from '@/components/AppAuth'
 import NavBar from '@/components/NavBar'
 
     export default {
         name: 'UserView',
         components: {
-            Signup,
+            'user-auth': UserAuth,
             NavBar
         }
     }
 </script>
-
-<style>
-</style>

@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app slot="signup">
     <v-card
     width="500px" 
     class="mt-12 sign-form mx-auto">
@@ -33,7 +33,7 @@
         </v-form>
       </v-card-text>
       <v-divider></v-divider>
-        <AuthButton :registerText="registerText" :loading="loading" @click="registerUser"/>
+        <AuthButton leftBotton="Login" :registerText="registerText" :loading="loading" @click="registerUser"/>
           <v-snackbar
       v-model="snackbar"
       :bottom="y === 'bottom'"

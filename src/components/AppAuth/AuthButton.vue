@@ -12,7 +12,7 @@
     ></v-progress-circular>
         </v-btn>
         <v-spacer></v-spacer>
-        <v-btn color="info">Login</v-btn>
+        <v-btn color="info">{{leftBotton}}</v-btn>
       </v-card-actions>
     </div>
 </template>
@@ -26,6 +26,9 @@
                 default: false
             },
             registerText:{
+                type: String
+            },
+            leftBotton: {
                 type: String
             }
         }
