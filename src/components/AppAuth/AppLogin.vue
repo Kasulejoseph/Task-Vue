@@ -33,7 +33,7 @@
         </v-form>
       </v-card-text>
       <v-divider></v-divider>
-      <AuthButton :disabled="!changed" leftBotton="Signup" :registerText="registerText" :loading="loading" @click="registerUser"/>
+      <AuthButton :disabled="!changed" :registerText="registerText" :loading="loading" @click="registerUser"/>
       </ValidationProvider>
     <SnackBar :snackbar ="snackbar" :color="color" :responseMessage ="responseMessage"/>
     </v-card>
@@ -55,7 +55,7 @@ export default {
         password: '',
         color: 'red',
         snackbar: false,
-        registerText: 'Register',
+        registerText: 'LOGIN',
       }
   },
   methods: {
@@ -64,7 +64,7 @@ export default {
           email: this.email,
           password: this.password 
         }
-        this.$store.dispatch('LOGIN_ACTION', payload)       
+        this.$store.dispatch('LOGIN_ACTION', payload)
     }
   },
   computed: {
@@ -76,6 +76,7 @@ export default {
       if(this.$store.getters.GET_USER.login.status){
         this.color = 'success'
         this.snackbar = true 
+        this.$router.push('/')
         return this.$store.getters.GET_USER.login.message;
         
       }
@@ -85,7 +86,7 @@ export default {
         this.registerText = ''
         return this.$store.getters.GET_LOADER
       }
-      this.registerText = 'Register'
+      this.registerText = 'LOGIN'
     } 
   },    
     }

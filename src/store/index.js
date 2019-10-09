@@ -59,7 +59,10 @@ export default new Vuex.Store({
             commit('HANDLE_ERROR', '')       
             axios.post(`${process.env.VUE_APP_BASE_URL}/users/login`, data)
             .then((response) => {
+                const { token } = response.data                
+                sessionStorage.setItem('auth-token', token);
                 commit('LOGIN_USER', response.data)
+                
                 commit('SHOW_SNACKBAR', {
                     color: 'success',
                     snackbar: true
@@ -76,10 +79,11 @@ export default new Vuex.Store({
             })
         },
         GET_TASKS_ACTION: ({commit}) => {
+            const token = sessionStorage.getItem('auth-token')
             return axios.get(`${process.env.VUE_APP_BASE_URL}/task`,
                 {
                     headers: {
-                  authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDhkMTIwODM1NTg3MjAwMTc1YzlmMGQiLCJpYXQiOjE1Njk4NDE0NjMsImV4cCI6MTU3MTA1MTA2M30.VOZ7bf7KM7BrRqB8P4eGwa9_gJi4StgDXUO4jURLwKo',
+                  authorization: token,
                   'content-type': 'application/x-www-form-urlencoded'
                 }
             })

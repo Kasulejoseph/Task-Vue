@@ -12,8 +12,6 @@
       :style=" !loading? 'display: none': 'display:block'"
     ></v-progress-circular>
         </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn color="info">{{leftBotton}}</v-btn>
       </v-card-actions>
     </div>
 </template>

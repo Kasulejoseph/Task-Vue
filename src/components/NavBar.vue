@@ -8,16 +8,16 @@
       <v-spacer></v-spacer>
       <v-btn
         text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
         target="_blank"
+        @click="yy"
       >
-        <span class="mr-2">
-            <v-avatar>
+        <span class="mr-2" v-html="navItem">
+            <!-- <v-avatar>
                 <img
                     src="https://cdn.vuetifyjs.com/images/john.jpg"
                     alt="John"
                 >
-            </v-avatar>
+            </v-avatar> -->
         </span>
       </v-btn>
     </v-app-bar>
@@ -27,7 +27,12 @@
 <script>
     export default {
         name: 'NavBar',
-        props: {}
+        props: ['navItem'],
+        methods: {
+          yy() {
+            this.$router.push('/')
+          }
+        },
     }
 </script>
 

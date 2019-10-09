@@ -1,7 +1,7 @@
 <template>
     <v-app color="white" class="hime">
     <v-card d-flex align-content-space-around flex-wrap>
-        <NavBar/>
+        <NavBar :navItem="navItem"/>
         <user-auth></user-auth>
     </v-card>
     </v-app>
@@ -15,6 +15,13 @@ import NavBar from '@/components/NavBar'
         components: {
             'user-auth': UserAuth,
             NavBar
-        }
+        },
+        computed: {
+            navItem() {
+                return `
+                        <v-btn color="info">REGISTER</v-btn>
+                        `
+            }
+        },
     }
 </script>
