@@ -1,27 +1,50 @@
 <template>
     <v-app color="white" class="hime">
     <v-card d-flex align-content-space-around flex-wrap>
-        <NavBar :navItem="navItem"/>
-        <user-auth></user-auth>
+        <NavBar :navItem="navItem" @click="toggleForm"/>
+        <div>
+            <signup v-if="slot==='signup'"></signup>
+            <LogIn v-if="slot==='login'"/>
+        </div>
     </v-card>
     </v-app>
 </template>
 <script>
 import UserAuth from '@/components/AppAuth'
 import NavBar from '@/components/NavBar'
+import Signup from '@/components/AppAuth/AppSignup'
+import LogIn from '@/components/AppAuth/AppLogin'
 
-    export default {
-        name: 'UserView',
-        components: {
-            'user-auth': UserAuth,
-            NavBar
-        },
-        computed: {
-            navItem() {
-                return `
-                        <v-btn color="info">REGISTER</v-btn>
-                        `
+export default {
+    name: 'UserView',
+    data() {
+        return {
+            slot: 'login'
+        }
+    },
+    components: {
+        'user-auth': UserAuth,
+        NavBar,
+        LogIn,
+        Signup
+    },
+    computed: {
+        navItem() {
+            console.log(this);
+            
+            return `
+                    <v-btn color="info">REGISTER</v-btn>
+                    `
+        }
+    },
+    methods: {
+        toggleForm() {
+            if(this.slot === 'login' ) {
+                this.slot = 'signup'
+            }else{
+                this.slot = 'login'
             }
-        },
-    }
+        }
+    },
+}
 </script>

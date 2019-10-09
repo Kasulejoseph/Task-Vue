@@ -9,7 +9,7 @@
       <v-btn
         text
         target="_blank"
-        @click="yy"
+        @click="$emit('click')"
       >
         <span class="mr-2" v-html="navItem">
             <!-- <v-avatar>
