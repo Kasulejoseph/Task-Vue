@@ -3,18 +3,24 @@
     <v-card
     width="500px" 
     class="mt-12 sign-form mx-auto">
+      <ValidationProvider
+          rules="required"
+          v-slot="{ changed }"
+      >
       <v-card-title class="pb-3 text-center">
         <h1>Login</h1>
       </v-card-title>
       <v-card-text>
         <v-form
         >
+        <ValidationProvider name="email" rules="required|email" v-slot="{ errors }">
           <v-text-field label="Email"
           type="email"
           prepend-icon="mdi-email"
           v-model="email"
-          :rules="email? [] : ['Required']"
            />
+           <span class="red--text" id="error">{{ errors[0] }}</span>
+           </ValidationProvider>
           <v-text-field 
             :type="showPassword ? 'text': 'Password'"
             label="Password" 
@@ -27,8 +33,9 @@
         </v-form>
       </v-card-text>
       <v-divider></v-divider>
-      <AuthButton leftBotton="Signup" :registerText="registerText" :loading="loading" @click="registerUser"/>
-    <SnackBar :snackbar ="snackbar" :color="color" :errorMessage ="errorMessage"/>
+      <AuthButton :disabled="!changed" leftBotton="Signup" :registerText="registerText" :loading="loading" @click="registerUser"/>
+      </ValidationProvider>
+    <SnackBar :snackbar ="snackbar" :color="color" :responseMessage ="responseMessage"/>
     </v-card>
   </v-app>
 </template>
@@ -44,11 +51,10 @@ export default {
     data () {
       return {
         showPassword: false,
-        username: '',
         email: '',
         password: '',
-        snackbar: false,
         color: 'red',
+        snackbar: false,
         registerText: 'Register',
       }
   },
@@ -58,17 +64,21 @@ export default {
           email: this.email,
           password: this.password 
         }
-        this.$store.dispatch('SIGNUP_ACTION', payload)       
+        this.$store.dispatch('LOGIN_ACTION', payload)       
     }
   },
   computed: {
-    errorMessage() {
+    responseMessage() {
       if(this.$store.getters.GET_ERROR.status){
         this.snackbar = true 
         return this.$store.getters.GET_ERROR.error.split(':')[0]
       }
-      this.color = 'blue'
-      return 'loading..'
+      if(this.$store.getters.GET_USER.login.status){
+        this.color = 'success'
+        this.snackbar = true 
+        return this.$store.getters.GET_USER.login.message;
+        
+      }
     },
     loading() {
       if(this.$store.getters.GET_LOADER){

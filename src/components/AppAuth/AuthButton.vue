@@ -3,6 +3,7 @@
       <v-card-actions>
         <v-btn color="success"
         @click="$emit('click')"
+        :disabled="disabled"
         >
         {{registerText}}
         <v-progress-circular
@@ -30,6 +31,9 @@
             },
             leftBotton: {
                 type: String
+            },
+            disabled: {
+                type: Boolean
             }
         }
         

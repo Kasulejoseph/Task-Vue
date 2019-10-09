@@ -45,7 +45,7 @@
       :top="y === 'top'"
       :vertical="mode === 'vertical'"
     >
-       {{errorMessage}}
+       {{responseMessage}}
       <v-btn
         dark
         text
@@ -91,7 +91,7 @@ export default {
     }
   },
   computed: {
-      errorMessage() {
+      responseMessage() {
           if(this.$store.getters.GET_ERROR.status){
             this.snackbar = true 
             return this.$store.getters.GET_ERROR.error.split(':')[0]

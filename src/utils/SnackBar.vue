@@ -11,7 +11,7 @@
       :top="y === 'top'"
       :vertical="mode === 'vertical'"
     >
-       {{errorMessage}}
+       {{responseMessage}}
       <v-btn
         dark
         text
@@ -27,7 +27,7 @@
     export default {
         name: 'SnackBar',
         props:{
-          errorMessage:{
+          responseMessage:{
             type: String
           },
           color: {
