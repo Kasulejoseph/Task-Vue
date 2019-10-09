@@ -3,9 +3,9 @@
     <v-card
     width="500px" 
     class="mt-12 sign-form mx-auto">
-      <ValidationProvider
+      <ValidationObserver
           rules="required"
-          v-slot="{ changed }"
+          v-slot="{ valid }"
       >
       <v-card-title class="pb-3 text-center">
         <h1>Login</h1>
@@ -21,6 +21,7 @@
            />
            <span class="red--text" id="error">{{ errors[0] }}</span>
            </ValidationProvider>
+        <ValidationProvider name="password" rules="required" v-slot="{ errors }">
           <v-text-field 
             :type="showPassword ? 'text': 'Password'"
             label="Password" 
@@ -28,13 +29,14 @@
             v-model="password"
             :append-icon=" showPassword? 'mdi-eye': 'mdi-eye-off'"
             @click:append="showPassword = !showPassword"
-            :rules="password? [] : ['Required']"
           />
+          <span class="red--text" id="error">{{ errors[0] }}</span>
+        </ValidationProvider>
         </v-form>
       </v-card-text>
       <v-divider></v-divider>
-      <AuthButton :disabled="!changed" :registerText="registerText" :loading="loading" @click="registerUser"/>
-      </ValidationProvider>
+      <AuthButton :disabled="!valid" :registerText="registerText" :loading="loading" @click="registerUser"/>
+      </ValidationObserver>
     <SnackBar :snackbar ="snackbar" :color="color" :responseMessage ="responseMessage"/>
     </v-card>
   </v-app>

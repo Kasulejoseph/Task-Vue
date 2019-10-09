@@ -3,9 +3,10 @@ import App from './App.vue'
 import router from './routers'
 import store from './store'
 import vuetify from './plugins/vuetify';
-import { ValidationProvider} from 'vee-validate/dist/vee-validate.full';
+import { ValidationProvider, ValidationObserver} from 'vee-validate/dist/vee-validate.full';
 
 Vue.config.productionTip = false
+Vue.component('ValidationObserver', ValidationObserver);
 Vue.component('ValidationProvider', ValidationProvider);
 
 new Vue({

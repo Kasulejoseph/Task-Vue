@@ -3,24 +3,33 @@
     <v-card
     width="500px" 
     class="mt-12 sign-form mx-auto">
+      <ValidationObserver
+        rules="required"
+        v-slot="{ valid }"
+      >
       <v-card-title class="pb-3 text-center">
         <h1>Sign Up</h1>
       </v-card-title>
       <v-card-text>
         <v-form
         >
+        <ValidationProvider name="username" rules="required" v-slot="{ errors }">
           <v-text-field 
           label="Username"
           prepend-icon="mdi-account-circle"
           v-model="username"
-          :rules="username? [] : ['Required']"
            />
+          <span class="red--text" id="error">{{ errors[0] }}</span>
+        </ValidationProvider>
+        <ValidationProvider name="email" rules="required|email" v-slot="{ errors }">
           <v-text-field label="Email"
           type="email"
           prepend-icon="mdi-email"
           v-model="email"
-          :rules="email? [] : ['Required']"
            />
+          <span class="red--text" id="error">{{ errors[0] }}</span>
+        </ValidationProvider>
+        <ValidationProvider name="password" rules="required" v-slot="{ errors }">
           <v-text-field 
             :type="showPassword ? 'text': 'Password'"
             label="Password" 
@@ -30,10 +39,12 @@
             @click:append="showPassword = !showPassword"
             :rules="password? [] : ['Required']"
           />
+        </ValidationProvider>
         </v-form>
       </v-card-text>
       <v-divider></v-divider>
-        <AuthButton leftBotton="Login" :registerText="registerText" :loading="loading" @click="registerUser"/>
+        <AuthButton :disabled="!valid" leftBotton="Login" :registerText="registerText" :loading="loading" @click="registerUser"/>
+        </ValidationObserver>
           <v-snackbar
       v-model="snackbar"
       :bottom="y === 'bottom'"

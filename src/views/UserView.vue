@@ -30,11 +30,14 @@ export default {
     },
     computed: {
         navItem() {
-            console.log(this);
-            
+            if(this.slot === 'login') {
             return `
-                    <v-btn color="info">REGISTER</v-btn>
-                    `
+                <v-btn color="info">REGISTER</v-btn>
+                `
+            }
+            return `
+                <v-btn color="info">Login</v-btn>
+                `
         }
     },
     methods: {
