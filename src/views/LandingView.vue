@@ -20,15 +20,15 @@ export default {
     },
     computed: {
         navItem(){
-            console.log(sessionStorage.getItem('auth-id'));
+            const avatarUrl = `${process.env.VUE_APP_BASE_URL}/users/${sessionStorage.getItem('auth-id')}/avatar`
             return `<div class="v-avatar" style="height: 48px; min-width: 48px; width: 48px;">
                 <img
-                    src="https://cdn.vuetifyjs.com/images/john.jpg"
+                    src="${avatarUrl}"
                     alt="John"
                 />
             </div> `
         }
-    },
+    }
 }
 </script>
 
