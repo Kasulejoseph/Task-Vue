@@ -1,26 +1,35 @@
 <template>
-  <v-app>
+  <v-app slot="signup">
     <v-card
     width="500px" 
     class="mt-12 sign-form mx-auto">
+      <ValidationObserver
+        rules="required"
+        v-slot="{ valid }"
+      >
       <v-card-title class="pb-3 text-center">
         <h1>Sign Up</h1>
       </v-card-title>
       <v-card-text>
         <v-form
         >
+        <ValidationProvider name="username" rules="required" v-slot="{ errors }">
           <v-text-field 
           label="Username"
           prepend-icon="mdi-account-circle"
           v-model="username"
-          :rules="username? [] : ['Required']"
            />
+          <span class="red--text" id="error">{{ errors[0] }}</span>
+        </ValidationProvider>
+        <ValidationProvider name="email" rules="required|email" v-slot="{ errors }">
           <v-text-field label="Email"
           type="email"
           prepend-icon="mdi-email"
           v-model="email"
-          :rules="email? [] : ['Required']"
            />
+          <span class="red--text" id="error">{{ errors[0] }}</span>
+        </ValidationProvider>
+        <ValidationProvider name="password" rules="required" v-slot="{ errors }">
           <v-text-field 
             :type="showPassword ? 'text': 'Password'"
             label="Password" 
@@ -30,39 +39,24 @@
             @click:append="showPassword = !showPassword"
             :rules="password? [] : ['Required']"
           />
+        </ValidationProvider>
         </v-form>
       </v-card-text>
       <v-divider></v-divider>
-        <AuthButton :registerText="registerText" :loading="loading" @click="registerUser"/>
-          <v-snackbar
-      v-model="snackbar"
-      :bottom="y === 'bottom'"
-      :color="color"
-      :left="x === 'left'"
-      :multi-line="mode === 'multi-line'"
-      :right="x === 'right'"
-      :timeout="timeout"
-      :top="y === 'top'"
-      :vertical="mode === 'vertical'"
-    >
-       {{errorMessage}}
-      <v-btn
-        dark
-        text
-        @click="snackbar = false"
-      >
-        Close
-      </v-btn>
-    </v-snackbar>
+      <AuthButton :disabled="!valid" leftBotton="Login" :registerText="registerText" :loading="loading" @click="registerUser"/>
+      </ValidationObserver>
+      <SnackBar :snackbar ="snackbar" :color="color" :responseMessage ="responseMessage"/>
     </v-card>
   </v-app>
 </template>
 
 <script>
 import AuthButton from './AuthButton'
+import SnackBar from '../../utils/SnackBar'
 export default {
     components:{
-        AuthButton
+        AuthButton,
+        SnackBar
     },
     data () {
         return {
@@ -71,12 +65,7 @@ export default {
             email: '',
             password: '',
             color: 'error',
-            mode: '',
             snackbar: false,
-            text: 'Hello, I\'m a snackbar',
-            timeout: 6000,
-            x: null,
-            y: 'top',
             registerText: 'Register',
         }
   },
@@ -91,12 +80,17 @@ export default {
     }
   },
   computed: {
-      errorMessage() {
+      responseMessage() {
           if(this.$store.getters.GET_ERROR.status){
             this.snackbar = true 
             return this.$store.getters.GET_ERROR.error.split(':')[0]
           }
-          return 'loading..'
+          if(this.$store.getters.GET_USER.signup.status){
+            this.snackbar = true 
+            this.color = 'success'
+            this.$router.push('/')
+            return 'Success!!'
+          }
       },
     loading() {
         if(this.$store.getters.GET_LOADER){

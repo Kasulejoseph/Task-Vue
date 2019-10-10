@@ -3,6 +3,7 @@
       <v-card-actions>
         <v-btn color="success"
         @click="$emit('click')"
+        :disabled="disabled"
         >
         {{registerText}}
         <v-progress-circular
@@ -11,8 +12,6 @@
       :style=" !loading? 'display: none': 'display:block'"
     ></v-progress-circular>
         </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn color="info">Login</v-btn>
       </v-card-actions>
     </div>
 </template>
@@ -27,6 +26,12 @@
             },
             registerText:{
                 type: String
+            },
+            leftBotton: {
+                type: String
+            },
+            disabled: {
+                type: Boolean
             }
         }
         
