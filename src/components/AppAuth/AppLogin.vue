@@ -72,25 +72,30 @@ export default {
   computed: {
     responseMessage() {
       if(this.$store.getters.GET_ERROR.status){
-        this.snackbar = true 
         return this.$store.getters.GET_ERROR.error.split(':')[0]
       }
       if(this.$store.getters.GET_USER.login.status){
-        this.color = 'success'
-        this.snackbar = true 
-        this.$router.push('/')
         return this.$store.getters.GET_USER.login.message;
-        
       }
+      return null
     },
     loading() {
-      if(this.$store.getters.GET_LOADER){
-        this.registerText = ''
         return this.$store.getters.GET_LOADER
-      }
-      this.registerText = 'LOGIN'
     } 
-  },    
+  },
+  watch: {
+    loading(newValue){
+      newValue? this.registerText = '': this.registerText = 'LOGIN'
+    },
+    responseMessage(newValue) {
+      this.snackbar = true 
+      if(newValue === 'Success!!') {
+        this.color = 'success'
+        this.$router.push('/')
+      }
+    }
+
+  }   
     }
 </script>
 

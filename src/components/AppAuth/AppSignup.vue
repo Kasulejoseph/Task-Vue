@@ -81,26 +81,30 @@ export default {
   },
   computed: {
       responseMessage() {
-          if(this.$store.getters.GET_ERROR.status){
-            this.snackbar = true 
+          if(this.$store.getters.GET_ERROR.status){            
             return this.$store.getters.GET_ERROR.error.split(':')[0]
           }
           if(this.$store.getters.GET_USER.signup.status){
-            this.snackbar = true 
-            this.color = 'success'
-            this.$router.push('/')
             return 'Success!!'
           }
+          return null
       },
     loading() {
-        if(this.$store.getters.GET_LOADER){
-            this.registerText = ''
-            return this.$store.getters.GET_LOADER
-        }
-        this.registerText = 'Register'
-    } 
-      
-  },    
+      return this.$store.getters.GET_LOADER
+    }   
+  },
+  watch: {
+    loading(newValue){
+      newValue ? this.registerText = '': this.registerText = 'Register'
+    },
+    responseMessage(newValue){
+      this.snackbar = true 
+      if(newValue === 'Success!!') {
+        this.color = 'success'
+        this.$router.push('/')
+      }
+    }
+  },  
     }
 </script>
 

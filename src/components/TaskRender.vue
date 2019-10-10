@@ -75,18 +75,23 @@ import moment from 'moment'
       },
       createdAt:{
         get() {
+          this.items ? this.items : false
+
           const taskArray = this.$store.getters.GET_TASKS.tasks.data
+          console.log('yfuewgfw', this.items);
+          
           taskArray.forEach(element => {
             this.millsec = Math.abs(new Date() - new Date(element.createdAt))
         });
         const timePayload = moment.duration(this.millsec)
-          return timePayload.days() + 'days ago'
+        return timePayload.days() + 'days ago'
         },
-        set(value) {
+        set() {
         }
       }
-
-    }
+    },
+    watch: {
+    },
     }
 </script>
 
