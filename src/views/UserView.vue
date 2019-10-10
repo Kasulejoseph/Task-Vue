@@ -10,7 +10,6 @@
     </v-app>
 </template>
 <script>
-import UserAuth from '@/components/AppAuth'
 import NavBar from '@/components/NavBar'
 import Signup from '@/components/AppAuth/AppSignup'
 import LogIn from '@/components/AppAuth/AppLogin'
@@ -23,7 +22,6 @@ export default {
         }
     },
     components: {
-        'user-auth': UserAuth,
         NavBar,
         LogIn,
         Signup

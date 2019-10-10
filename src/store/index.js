@@ -44,8 +44,10 @@ export default new Vuex.Store({
             commit('UPDATE_LOADER', true)          
             axios.post(`${process.env.VUE_APP_BASE_URL}/users`, data)
             .then((response) => {
+                const { token } = response.data                
+                sessionStorage.setItem('auth-token', token)
                 commit('SIGNUP_USER', response.data)
-                commit('UPDATE_LOADER', true)
+                commit('UPDATE_LOADER', false)
                 
             })
             .catch((error) => {
@@ -94,7 +96,6 @@ export default new Vuex.Store({
                 commit('HANDLE_ERROR',error.response)
             })
         }
-
     },
     getters: { 
         GET_TASKS(state) {

@@ -43,37 +43,20 @@
         </v-form>
       </v-card-text>
       <v-divider></v-divider>
-        <AuthButton :disabled="!valid" leftBotton="Login" :registerText="registerText" :loading="loading" @click="registerUser"/>
-        </ValidationObserver>
-          <v-snackbar
-      v-model="snackbar"
-      :bottom="y === 'bottom'"
-      :color="color"
-      :left="x === 'left'"
-      :multi-line="mode === 'multi-line'"
-      :right="x === 'right'"
-      :timeout="timeout"
-      :top="y === 'top'"
-      :vertical="mode === 'vertical'"
-    >
-       {{responseMessage}}
-      <v-btn
-        dark
-        text
-        @click="snackbar = false"
-      >
-        Close
-      </v-btn>
-    </v-snackbar>
+      <AuthButton :disabled="!valid" leftBotton="Login" :registerText="registerText" :loading="loading" @click="registerUser"/>
+      </ValidationObserver>
+      <SnackBar :snackbar ="snackbar" :color="color" :responseMessage ="responseMessage"/>
     </v-card>
   </v-app>
 </template>
 
 <script>
 import AuthButton from './AuthButton'
+import SnackBar from '../../utils/SnackBar'
 export default {
     components:{
-        AuthButton
+        AuthButton,
+        SnackBar
     },
     data () {
         return {
@@ -82,12 +65,7 @@ export default {
             email: '',
             password: '',
             color: 'error',
-            mode: '',
             snackbar: false,
-            text: 'Hello, I\'m a snackbar',
-            timeout: 6000,
-            x: null,
-            y: 'top',
             registerText: 'Register',
         }
   },
@@ -107,7 +85,12 @@ export default {
             this.snackbar = true 
             return this.$store.getters.GET_ERROR.error.split(':')[0]
           }
-          return 'loading..'
+          if(this.$store.getters.GET_USER.signup.status){
+            this.snackbar = true 
+            this.color = 'success'
+            this.$router.push('/')
+            return 'Success!!'
+          }
       },
     loading() {
         if(this.$store.getters.GET_LOADER){
