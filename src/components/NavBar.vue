@@ -12,12 +12,6 @@
         @click="$emit('click')"
       >
         <span class="mr-2" v-html="navItem">
-            <!-- <v-avatar>
-                <img
-                    src="https://cdn.vuetifyjs.com/images/john.jpg"
-                    alt="John"
-                >
-            </v-avatar> -->
         </span>
       </v-btn>
     </v-app-bar>

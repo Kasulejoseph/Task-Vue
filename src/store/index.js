@@ -61,8 +61,10 @@ export default new Vuex.Store({
             commit('HANDLE_ERROR', '')       
             axios.post(`${process.env.VUE_APP_BASE_URL}/users/login`, data)
             .then((response) => {
-                const { token } = response.data                
+                const { token } = response.data
+                const { _id:userId } = response.data.data              
                 sessionStorage.setItem('auth-token', token);
+                sessionStorage.setItem('auth-id', userId);
                 commit('LOGIN_USER', response.data)
                 
                 commit('SHOW_SNACKBAR', {

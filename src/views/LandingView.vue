@@ -1,6 +1,6 @@
 <template>
     <div>
-        <NavBar />
+        <NavBar :navItem="navItem"/>
         <LandingPage msg="Get your task done.." />
         <TaskRender />
     </div>
@@ -17,7 +17,18 @@ export default {
         LandingPage,
         NavBar,
         TaskRender
-    }
+    },
+    computed: {
+        navItem(){
+            console.log(sessionStorage.getItem('auth-id'));
+            return `<div class="v-avatar" style="height: 48px; min-width: 48px; width: 48px;">
+                <img
+                    src="https://cdn.vuetifyjs.com/images/john.jpg"
+                    alt="John"
+                />
+            </div> `
+        }
+    },
 }
 </script>
 
