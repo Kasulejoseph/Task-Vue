@@ -72,25 +72,36 @@ export default {
   computed: {
     responseMessage() {
       if(this.$store.getters.GET_ERROR.status){
-        this.snackbar = true 
         return this.$store.getters.GET_ERROR.error.split(':')[0]
       }
       if(this.$store.getters.GET_USER.login.status){
+        return this.$store.getters.GET_USER.login.message;
+      }
+      return null
+    },
+    loading() {
+        return this.$store.getters.GET_LOADER
+    } 
+  },
+  watch: {
+    loading(newValue){
+      newValue? this.registerText = '': this.registerText = 'LOGIN'
+    },
+    responseMessage(newValue) {
+      this.snackbar = false
+      if(newValue === null){
+        return
+      }
+      if(newValue === 'Logged in successfully!!') {
         this.color = 'success'
         this.snackbar = true 
         this.$router.push('/')
-        return this.$store.getters.GET_USER.login.message;
-        
       }
-    },
-    loading() {
-      if(this.$store.getters.GET_LOADER){
-        this.registerText = ''
-        return this.$store.getters.GET_LOADER
+      if(newValue === 'Invalid credentials') {
+        this.snackbar = true 
       }
-      this.registerText = 'LOGIN'
-    } 
-  },    
+    }
+  }   
     }
 </script>
 
