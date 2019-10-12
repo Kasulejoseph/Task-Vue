@@ -4,7 +4,7 @@
     max-width="1300"
     class="mx-auto"
   >
-  <div v-if="items">
+  <div v-if="isItems">
     <v-list two-line>
       <v-list-item-group
         v-model="selected"
@@ -59,7 +59,8 @@ import moment from 'moment'
   export default {
     data: () => ({
       selected: [1],
-      millSec: ''
+      millSec: '',
+      timePayload: 1 +'day ago'
     }),
 
     created: function() {
@@ -67,30 +68,35 @@ import moment from 'moment'
     },
 
     computed: {
-      items () {     
+      isItems() {
+        if(this.items.length === 0 || this.items === false){
+          return false
+        }else{
+        return true
+        }
+      },
+      items () {  
         if(this.$store.getters.GET_TASKS.tasks.data) {
           return this.$store.getters.GET_TASKS.tasks.data
         }
         return false
       },
-      createdAt:{
-        get() {
-          this.items ? this.items : false
-
-          const taskArray = this.$store.getters.GET_TASKS.tasks.data
-          console.log('yfuewgfw', this.items);
-          
-          taskArray.forEach(element => {
-            this.millsec = Math.abs(new Date() - new Date(element.createdAt))
-        });
-        const timePayload = moment.duration(this.millsec)
-        return timePayload.days() + 'days ago'
-        },
-        set() {
-        }
+      createdAt() { 
+        if(this.items) {
+        return this.timePayload
       }
+      return false 
+      } 
+
     },
     watch: {
+      createdAt() {        
+        this.items.forEach(element => {
+          this.millsec = Math.abs(new Date() - new Date(element.createdAt))
+        });
+        const momentOfTime = moment.duration(this.millsec)
+        this.timePayload = momentOfTime.days() + 'days ago'
+      }
     },
     }
 </script>

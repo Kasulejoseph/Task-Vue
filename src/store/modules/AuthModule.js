@@ -11,6 +11,10 @@ export default {
         },
         error: {},
         loading: false,
+        avatar: {
+            image: '',
+            error: ''
+        },
         showsnack: {
             color: '',
             snackbar: false
@@ -34,10 +38,23 @@ export default {
         },
         SHOW_SNACKBAR(state, payload){
             state.showsnack = payload 
+        },
+        UPDATE_AVATAR(state, error){
+            state.avatar.error = error
         }
+
 
     },
     actions: {
+        AVATAR_ACTION: ({commit}) => {
+            commit('UPDATE_AVATAR', '')
+            axios.get(`${process.env.VUE_APP_BASE_URL}/users/${sessionStorage.getItem('auth-id')}/avatar`)
+            .then(() => {                
+            })
+            .catch((error)=> {                
+                commit('UPDATE_AVATAR', error.response.data)
+            })
+        },
         SIGNUP_ACTION: ({commit}, data) => { 
             commit('UPDATE_LOADER', true)          
             axios.post(`${process.env.VUE_APP_BASE_URL}/users`, data)
@@ -81,6 +98,7 @@ export default {
             })
         },
         GET_TASKS_ACTION: ({commit}) => {
+            commit('SET_TASKS', '')
             const token = sessionStorage.getItem('auth-token')
             return axios.get(`${process.env.VUE_APP_BASE_URL}/task`,
                 {

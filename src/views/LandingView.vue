@@ -18,13 +18,16 @@ export default {
         NavBar,
         TaskRender
     },
+    created() {
+        this.$store.dispatch('AVATAR_ACTION')
+    },
     computed: {
         navItem(){
-            const avatarUrl = `${process.env.VUE_APP_BASE_URL}/users/${sessionStorage.getItem('auth-id')}/avatar`
+            const avatarUrl = this.$store.state.AuthModule.avatar.error.error === 'No image found'? 'https://cdn.vuetifyjs.com/images/john.jpg': `${process.env.VUE_APP_BASE_URL}/users/${sessionStorage.getItem('auth-id')}/avatar`                     
             return `<div class="v-avatar" style="height: 48px; min-width: 48px; width: 48px;">
                 <img
                     src="${avatarUrl}"
-                    alt="John"
+                    alt="avatar"
                 />
             </div> `
         }

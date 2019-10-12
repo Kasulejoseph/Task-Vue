@@ -21,12 +21,7 @@
 <script>
     export default {
         name: 'NavBar',
-        props: ['navItem'],
-        methods: {
-          yy() {
-            this.$router.push('/')
-          }
-        },
+        props: ['navItem']
     }
 </script>
 

@@ -88,13 +88,19 @@ export default {
       newValue? this.registerText = '': this.registerText = 'LOGIN'
     },
     responseMessage(newValue) {
-      this.snackbar = true 
-      if(newValue === 'Success!!') {
+      this.snackbar = false
+      if(newValue === null){
+        return
+      }
+      if(newValue === 'Logged in successfully!!') {
         this.color = 'success'
+        this.snackbar = true 
         this.$router.push('/')
       }
+      if(newValue === 'Invalid credentials') {
+        this.snackbar = true 
+      }
     }
-
   }   
     }
 </script>
