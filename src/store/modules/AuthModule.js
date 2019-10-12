@@ -2,9 +2,6 @@ import axios from 'axios'
 
 export default {
     state: {
-        key: "From store",
-        count: 0,
-        tasks: [],
         user: {
             signup: {},
             login: {}
@@ -21,9 +18,6 @@ export default {
         }
     },
     mutations: {
-        SET_TASKS(state, tasks) {
-            state.tasks = tasks
-        },
         SIGNUP_USER(state, user) {
             state.user.signup = user
         },
@@ -97,28 +91,8 @@ export default {
                 })  
             })
         },
-        GET_TASKS_ACTION: ({commit}) => {
-            commit('SET_TASKS', '')
-            const token = sessionStorage.getItem('auth-token')
-            return axios.get(`${process.env.VUE_APP_BASE_URL}/task`,
-                {
-                    headers: {
-                  authorization: token,
-                  'content-type': 'application/x-www-form-urlencoded'
-                }
-            })
-            .then((response) => {                
-                commit('SET_TASKS', response.data)
-            })
-            .catch((error) => {                
-                commit('HANDLE_ERROR',error.response)
-            })
-        }
     },
     getters: { 
-        GET_TASKS(state) {
-            return state
-        },
         GET_USER(state){
             return state.user
         },

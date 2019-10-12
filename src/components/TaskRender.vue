@@ -75,7 +75,7 @@ import moment from 'moment'
         return true
         }
       },
-      items () {  
+      items () {          
         if(this.$store.getters.GET_TASKS.tasks.data) {
           return this.$store.getters.GET_TASKS.tasks.data
         }
@@ -90,7 +90,7 @@ import moment from 'moment'
 
     },
     watch: {
-      createdAt() {        
+      createdAt() {  
         this.items.forEach(element => {
           this.millsec = Math.abs(new Date() - new Date(element.createdAt))
         });
