@@ -1,14 +1,31 @@
 <template>
   <v-content class="landing">
     <v-container>
-    <h1 class="text-center">{{ msg }}</h1>
+      <v-row no-gutters>
+        <v-col
+        cols="12"
+        md="4"
+      >
+      <AddTask />
+        </v-col>
+        <v-col
+      >
+      <h1 class="text-center">{{ msg }}</h1>
+        </v-col>
+        <v-col>
+        </v-col>
+      </v-row>
+
     </v-container>
   </v-content>
 </template>
 <script>
-
+import AddTask from './AddTask'
 export default {
   name: 'LandingPage',
+  components:{
+    AddTask
+  },
   props: {
     msg: String
   }
