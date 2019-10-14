@@ -1,15 +1,16 @@
 <template>
   <v-container >
-         <v-btn class="ma-2" color="primary" dark>Add
+         <v-btn @click="showForm" class="ma-2" color="primary" dark>Add
             <v-icon dark right>mdi-circle-edit-outline</v-icon>
         </v-btn>
         <v-card
-        class="mx-auto"
-        max-width="500"
+        class="mx-auto mt-5"
+        max-width="100%"
         outlined
+        v-show="isFormOpen"
         >
         <v-list-item>
-            <v-list-item-content>
+            <v-list-item-content class="input-field">
         <v-text-field
         v-model="category"
         counter="10"
@@ -28,25 +29,40 @@
         ></v-textarea>
         </v-list-item-content>
         </v-list-item>
-            <v-card-actions>
-      <v-btn text>Add</v-btn>
+        <v-divider></v-divider>
+          <v-card-actions>
+      <v-btn block text >CREATE</v-btn>
     </v-card-actions>
         </v-card>
   </v-container>
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                desc: '',
-                category: ''
-            }
-        },
+  export default {
+    data() {
+      return {
+        desc: '',
+        category: '',
+        isFormOpen: false
+      }
+    },
+    methods: {
+      showForm() {        
+        if(this.isFormOpen) {
+          this.isFormOpen = false
+        }else {
+          this.isFormOpen = true
+        }
+
+      }
+    },
         
-    }
+  }
 </script>
 
 <style lang="scss" scoped>
+.input-field {
+  display: block;
+}
 
 </style>
