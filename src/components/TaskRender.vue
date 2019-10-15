@@ -75,9 +75,9 @@ import moment from 'moment'
         return true
         }
       },
-      items () {          
+      items () {   
         if(this.$store.getters.GET_TASKS.tasks.data) {
-          return this.$store.getters.GET_TASKS.tasks.data
+          return this.$store.getters.GET_TASKS.tasks.data.reverse()
         }
         return false
       },
@@ -92,6 +92,7 @@ import moment from 'moment'
     watch: {
       createdAt() {  
         this.items.forEach(element => {
+          
           this.millsec = Math.abs(new Date() - new Date(element.createdAt))
         });
         const momentOfTime = moment.duration(this.millsec)

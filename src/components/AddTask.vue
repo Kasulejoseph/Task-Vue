@@ -30,7 +30,7 @@
         </v-list-item-content>
         </v-list-item>
         <v-divider></v-divider>
-          <v-card-actions>
+          <v-card-actions @click="addTask">
       <v-btn block text >CREATE</v-btn>
     </v-card-actions>
         </v-card>
@@ -46,7 +46,17 @@
         isFormOpen: false
       }
     },
+    computed: {
+      taskPayload() {
+        return {
+          desc: this.desc
+        }
+      }
+    },
     methods: {
+      addTask() {
+        this.$store.dispatch('CREATE_TASK_ACTION', this.taskPayload)
+      },
       showForm() {        
         if(this.isFormOpen) {
           this.isFormOpen = false
