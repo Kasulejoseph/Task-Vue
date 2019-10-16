@@ -3,6 +3,8 @@
  <v-card
     max-width="1300"
     class="mx-auto"
+    width="1215px"
+    outlined
   >
   <div v-if="isItems">
     <v-list two-line>
@@ -18,6 +20,14 @@
                 <v-list-item-title class="item-title" v-text="item.complete"></v-list-item-title>
                 <v-list-item-subtitle class="text--primary" v-text="item.author"></v-list-item-subtitle>
                 <v-list-item-subtitle class="item-subtitle" v-text="item.desc"></v-list-item-subtitle>
+                <v-card-actions>
+                <v-btn class=" ml-0 ma-2" color="primary" small dark>Edit
+                <v-icon dark >mdi-playlist-edit</v-icon>
+                </v-btn>
+                <v-btn class=" ma-2" color="red" small dark>delete
+                <v-icon dark >mdi-delete</v-icon>
+                </v-btn>
+                </v-card-actions>
               </v-list-item-content>
 
               <v-list-item-action>
@@ -92,7 +102,6 @@ import moment from 'moment'
     watch: {
       createdAt() {  
         this.items.forEach(element => {
-          
           this.millsec = Math.abs(new Date() - new Date(element.createdAt))
         });
         const momentOfTime = moment.duration(this.millsec)

@@ -21,7 +21,7 @@ export default {
                 const {
                     data
                 } = await axios({
-                    url: `${process.env.VUE_APP_BASE_URL}/task`,
+                    url: `http://127.0.0.1:8000/task`,
                     method: 'POST',
                     headers: {
                         Authorization: token,
@@ -31,7 +31,7 @@ export default {
                 commit('CREATE_TASK', data)
 
             } catch (error) {
-                console.log(error.response);
+                commit('HANDLE_ERROR', error.response)
 
             }
 
@@ -52,7 +52,7 @@ export default {
         }) => {
             commit('SET_TASKS', '')
             const token = sessionStorage.getItem('auth-token')
-            return axios.get(`${process.env.VUE_APP_BASE_URL}/task`, {
+            return axios.get(`http://127.0.0.1:8000/task`, {
                     headers: {
                         authorization: token,
                         'content-type': 'application/x-www-form-urlencoded'
