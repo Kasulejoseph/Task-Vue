@@ -1,11 +1,12 @@
 <template>
   <v-app slot="login">
     <v-card
-    width="500px" 
-    class="mt-12 sign-form mx-auto">
-      <ValidationObserver
-          rules="required"
-          v-slot="{ valid }"
+    outlined
+    class="sign-form">
+    <div class="form-content">
+    <ValidationObserver
+        rules="required"
+        v-slot="{ valid }"
       >
       <v-card-title class="pb-3 text-center">
         <h1>Login</h1>
@@ -37,6 +38,7 @@
       <v-divider></v-divider>
       <AuthButton :disabled="!valid" :registerText="registerText" :loading="loading" @click="registerUser"/>
       </ValidationObserver>
+    </div>
     <SnackBar :snackbar ="snackbar" :color="color" :responseMessage ="responseMessage"/>
     </v-card>
   </v-app>
@@ -108,11 +110,16 @@ export default {
 <style lang="scss" scoped>
 .text-center {
     text-align: center !important;
-    margin-left: 120px;
+    padding-top: 18px;
+    padding-bottom: 21px !important;
 }
 .sign-form {
-    margin-top: 500px !important;
+    margin-top: 100px !important;
+    margin: 20%;
+    height: 20%;
 }
-
+.form-content{
+  height: -webkit-fill-available;
+}
 </style>
 
