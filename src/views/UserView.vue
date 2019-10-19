@@ -1,5 +1,5 @@
 <template>
-    <v-app color="white" class="hime">
+    <div>
     <v-card d-flex align-content-space-around flex-wrap>
         <NavBar :navItem="navItem" @click="toggleForm"/>
         <div>
@@ -7,7 +7,7 @@
             <LogIn v-if="slot==='login'"/>
         </div>
     </v-card>
-    </v-app>
+    </div>
 </template>
 <script>
 import NavBar from '@/components/NavBar'
