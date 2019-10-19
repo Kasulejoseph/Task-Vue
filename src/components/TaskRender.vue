@@ -14,7 +14,7 @@
         active-class="white--text"
       >
         <template v-for="(item, index) in items">
-          <v-list-item class="list-item" :key="item.title">
+          <v-list-item :id="item._id"  class="list-item" :key="item.title" >
             <template v-slot:default="{ active, toggle }">
               <v-list-item-content>
                 <v-list-item-title class="item-title" v-text="item.complete"></v-list-item-title>
@@ -24,7 +24,7 @@
                 <v-btn class=" ml-0 ma-2" color="primary" small dark>Edit
                 <v-icon dark >mdi-playlist-edit</v-icon>
                 </v-btn>
-                <v-btn class=" ma-2" color="red" small dark>delete
+                <v-btn @click="deleteTask(item._id)" class="ma-2" color="red" small dark>delete
                 <v-icon dark >mdi-delete</v-icon>
                 </v-btn>
                 </v-card-actions>
@@ -66,7 +66,9 @@
 
 <script>
 import moment from 'moment'
+import {ButtonMixins} from '../mixins/ButtonMixins'
   export default {
+    mixins: [ButtonMixins],
     data: () => ({
       selected: [1],
       millSec: '',
@@ -74,7 +76,7 @@ import moment from 'moment'
     }),
 
     created: function() {
-      this.$store.dispatch('GET_TASKS_ACTION')
+      this.$store.dispatch('GET_TASKS_ACTION')       
     },
 
     computed: {
