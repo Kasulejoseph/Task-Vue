@@ -68,7 +68,7 @@ export default {
             commit('UPDATE_LOADER', true) 
             commit('LOGIN_USER', '')   
             commit('HANDLE_ERROR', '')       
-            axios.post(`http://127.0.0.1:8000/users/login`, data)
+            axios.post(`${process.env.VUE_APP_BASE_URL}/users/login`, data)
             .then((response) => {
                 const { token } = response.data
                 const { _id:userId } = response.data.data              
