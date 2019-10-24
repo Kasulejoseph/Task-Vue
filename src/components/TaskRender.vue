@@ -7,15 +7,23 @@
     outlined
   >
   <div v-if="isItems">
-    <v-list two-line>
+    <v-list three-line>
+      <v-subheader>Complete</v-subheader>
       <v-list-item-group
-        v-model="selected"
+        v-if="items.complete ? selected : selected"
         multiple
-        active-class="white--text"
       >
         <template v-for="(item, index) in items">
-          <v-list-item :id="item._id"  class="list-item" :key="item.title" >
+          <v-list-item :id="item._id" :key="item.title" >
             <template v-slot:default="{ active, toggle }">
+               <v-list-item-action>
+              <v-checkbox
+              v-model="active"
+              @change="ischecked(item._id)"
+              color="info"
+              hide-details
+              ></v-checkbox>
+            </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title class="item-title" v-text="item.complete"></v-list-item-title>
                 <v-list-item-subtitle class="text--primary" v-text="item.author"></v-list-item-subtitle>
@@ -32,25 +40,9 @@
 
               <v-list-item-action>
                 <v-list-item-action-text v-text="createdAt"></v-list-item-action-text>
-                <v-icon
-                  v-if="!active && !item.complete "
-                  class="item-icon"
-                  color="grey lighten-1"
-                >
-                  mdi-thumb-down
-                </v-icon>
-
-                <v-icon
-                  v-else
-                  class="item-icon"
-                  color="green"
-                >
-                  mdi-thumb-up
-                </v-icon>
               </v-list-item-action>
             </template>
           </v-list-item>
-
           <v-divider
             v-if="index + 1 < items.length"
             :key="index"
@@ -87,7 +79,12 @@ import {ButtonMixins} from '../mixins/ButtonMixins'
         return true
         }
       },
-      items () {   
+      // selected() {
+
+      // },
+      items () {  
+        console.log(this.$store.getters.GET_TASKS.tasks.data);
+         
         if(this.$store.getters.GET_TASKS.tasks.data) {
           return this.$store.getters.GET_TASKS.tasks.data.reverse()
         }
