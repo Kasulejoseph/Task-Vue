@@ -97,7 +97,7 @@ export default {
       if(newValue === 'Logged in successfully!!') {
         this.color = 'success'
         this.snackbar = true 
-        this.$router.push('/')
+        this.$router.push('/tasks')
       }
       if(newValue === 'Invalid credentials') {
         this.snackbar = true 
