@@ -5,22 +5,25 @@ export default {
         tasks: [],
         updateTasks: []
     },
+    
     mutations: {
         SET_TASKS(state, tasks) {
+            if(tasks) {
+                state.tasks = tasks
+            }
             state.tasks = tasks
         },
         CREATE_TASK(state, task) {
             state.tasks = {data: [...state.tasks.data, task.data]}
+            state.tasks.data.reverse()
         },
         DELETE_TASK(state, task) {
             const oldTaskList = state.tasks.data
             state.tasks = oldTaskList.filter(element => element._id !== task._id)
         },
-        UPDATE_TASK(state, task) {
-            // state.tasks = task
-        }
 
     },
+
     actions: {
         UPDATE_STATUS: ({commit}, payload) => {            
             const token = sessionStorage.getItem('auth-token')            
@@ -34,18 +37,14 @@ export default {
                 data: {complete: payload.status}
 
             })
-            .then((response) => {
-                console.log('response', response.data);
-                
-                commit('UPDATE_TASK', response.data.data)                
+            .then(() => {           
             })
-            .catch((error) => {
-                console.log(error.response);
-                
+            .catch((error) => {                
                 commit('HANDLE_ERROR', error.response)
             })
 
         },
+
         DELETE_TAST_ACTION: ({commit}, task_id) => {
             const token = sessionStorage.getItem('auth-token')
             return axios.delete(`${process.env.VUE_APP_BASE_URL}/tasks/${task_id}`, {
@@ -60,6 +59,7 @@ export default {
                 commit('HANDLE_ERROR', error.response)
             })
         },
+
         CREATE_TASK_ACTION: async ({
             commit
         }, dataPayload) => {
@@ -75,15 +75,12 @@ export default {
                     },
                     data: dataPayload
                 })
-                commit('CREATE_TASK', data)
-                
-
+                commit('CREATE_TASK', data)  
             } catch (error) {
                 commit('HANDLE_ERROR', error.response)
-
             }
-
         },
+
         GET_TASKS_ACTION: ({
             commit
         }) => {
@@ -103,6 +100,7 @@ export default {
                 })
         }
     },
+
     getters: {
         GET_TASKS(state) {
             return state

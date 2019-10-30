@@ -7,10 +7,8 @@ export const ButtonMixins = {
             // this would work also
             // document.getElementById(task_id).style.display = 'none'
         },
-        ischecked(id){
-            this.$store.dispatch('UPDATE_STATUS', {id, status: true}).then(() => {
-                this.$store.dispatch('GET_TASKS_ACTION')       
-            })
+        ischecked(id, status){            
+            this.$store.dispatch('UPDATE_STATUS', {id, status: !status})
         }
     },
 }

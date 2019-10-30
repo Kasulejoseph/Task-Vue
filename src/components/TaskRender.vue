@@ -18,8 +18,8 @@
             <template v-slot:default="{ active, toggle }">
                <v-list-item-action>
               <v-checkbox
-              v-model="active"
-              @change="ischecked(item._id)"
+              v-model="item.complete"
+              @change="ischecked(item._id, status=!item.complete)"
               color="info"
               hide-details
               ></v-checkbox>
@@ -63,6 +63,7 @@ import {ButtonMixins} from '../mixins/ButtonMixins'
     mixins: [ButtonMixins],
     data: () => ({
       selected: [1],
+      checked: true,
       millSec: '',
       timePayload: 1 +'day ago'
     }),
@@ -79,14 +80,9 @@ import {ButtonMixins} from '../mixins/ButtonMixins'
         return true
         }
       },
-      // selected() {
-
-      // },
-      items () {  
-        console.log(this.$store.getters.GET_TASKS.tasks.data);
-         
+      items () {           
         if(this.$store.getters.GET_TASKS.tasks.data) {
-          return this.$store.getters.GET_TASKS.tasks.data.reverse()
+          return this.$store.getters.GET_TASKS.tasks.data
         }
         return false
       },
