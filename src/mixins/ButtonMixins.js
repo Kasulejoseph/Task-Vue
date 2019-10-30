@@ -6,6 +6,9 @@ export const ButtonMixins = {
             })
             // this would work also
             // document.getElementById(task_id).style.display = 'none'
+        },
+        ischecked(id, status){            
+            this.$store.dispatch('UPDATE_STATUS', {id, status: !status})
         }
     },
 }

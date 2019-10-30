@@ -104,7 +104,7 @@ export default {
       this.snackbar = true 
       if(newValue === 'Success!!') {
         this.color = 'success'
-        this.$router.push('/')
+        this.$router.push('/tasks')
       }
     }
   },  
