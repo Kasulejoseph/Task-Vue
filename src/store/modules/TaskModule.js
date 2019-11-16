@@ -86,7 +86,7 @@ export default {
         }) => {
             commit('SET_TASKS', '')
             const token = sessionStorage.getItem('auth-token')
-            return axios.get(`${process.env.VUE_APP_BASE_URL}/task`, {
+            return axios.get(`${process.env.VUE_APP_BASE_URL}/task?limit=2`, {
                     headers: {
                         authorization: token,
                         'content-type': 'application/x-www-form-urlencoded'
