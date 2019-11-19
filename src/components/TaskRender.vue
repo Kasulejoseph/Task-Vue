@@ -5,7 +5,7 @@
         <v-list three-line>
           <v-subheader>Complete</v-subheader>
           <v-list-item-group v-if="items.complete ? selected : selected" multiple>
-            <template v-for="(item, index) in items">
+            <template v-for="(item, index) in items.data">
               <v-list-item :id="item._id" :key="item.title">
                 <template v-slot:default="{ active, toggle }">
                   <v-list-item-action>
@@ -46,8 +46,9 @@
     <p></p>
     <v-pagination
       v-model="page"
-      :length="4"
+      :length=paginate
       prev-icon="mdi-menu-left"
+      @input="me"
       next-icon="mdi-menu-right"
     ></v-pagination>
   </div>
@@ -78,9 +79,16 @@ export default {
         return true;
       }
     },
+    paginate() {
+      return this.items.meta? Math.ceil(this.items.meta.count / 2) : 0
+    },
+    meta(){
+      return this.items.meta
+    },
     items() {
+      console.log('-=-----', this.$store.getters.GET_TASKS.tasks)
       if (this.$store.getters.GET_TASKS.tasks.data) {
-        return this.$store.getters.GET_TASKS.tasks.data;
+        return this.$store.getters.GET_TASKS.tasks;
       }
       return false;
     },
@@ -93,13 +101,26 @@ export default {
   },
   watch: {
     createdAt() {
-      this.items.forEach(element => {
+      this.items.data.forEach(element => {
         this.millsec = Math.abs(new Date() - new Date(element.createdAt));
       });
       const momentOfTime = moment.duration(this.millsec);
       this.timePayload = momentOfTime.days() + "days ago";
     }
-  }
+  },
+  methods: {
+    me(next){
+      if(next >= this.paginate) {
+        console.log('yes', next, 'this.paginate', this.paginate)
+        this.$store.dispatch('GET_TASKS_ACTION', this.meta.nextPage)
+      }
+      else if(next < this.paginate) {
+        console.log('nO', next, 'this', this.paginate)
+        this.$store.dispatch('GET_TASKS_ACTION', this.meta.prevPage)
+      }
+      console.log('value', next)
+    }
+  },
 };
 </script>
 

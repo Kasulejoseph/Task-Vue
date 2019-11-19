@@ -83,10 +83,11 @@ export default {
 
         GET_TASKS_ACTION: ({
             commit
-        }) => {
+        }, paginate) => {
             commit('SET_TASKS', '')
+            const pag = paginate?paginate: 'limit=2'
             const token = sessionStorage.getItem('auth-token')
-            return axios.get(`${process.env.VUE_APP_BASE_URL}/task?limit=2`, {
+            return axios.get(`${process.env.VUE_APP_BASE_URL}/task/?${pag}`, {
                     headers: {
                         authorization: token,
                         'content-type': 'application/x-www-form-urlencoded'
