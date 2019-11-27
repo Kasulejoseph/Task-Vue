@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "now-build": "npm run build"
+    "now-build": "npm run build",
+    "test:e2e": "testcafe chrome src/test/auth.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -27,6 +28,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "sass": "^1.17.4",
     "sass-loader": "^7.1.0",
+    "testcafe": "^1.7.0",
     "vue-cli-plugin-vuetify": "^0.6.3",
     "vue-template-compiler": "^2.6.10",
     "vuetify-loader": "^1.2.2"
