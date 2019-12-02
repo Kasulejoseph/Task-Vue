@@ -1,17 +1,16 @@
 <template>
     <div>
     <v-card d-flex align-content-space-around flex-wrap>
-        <NavBar :navItem="navItem" @click="toggleForm"/>
+        <nav-bar :navItem="navItem" @click="toggleForm"></nav-bar>
         <div>
-            <signup v-if="slot==='signup'"></signup>
-            <LogIn v-if="slot==='login'"/>
+            <sign-up v-if="slot==='signup'"></sign-up>
+            <log-in v-if="slot==='login'"></log-in>
         </div>
     </v-card>
     </div>
 </template>
 <script>
 import NavBar from '@/components/NavBar'
-import Signup from '@/components/AppAuth/AppSignup'
 import LogIn from '@/components/AppAuth/AppLogin'
 
 export default {
@@ -24,7 +23,7 @@ export default {
     components: {
         NavBar,
         LogIn,
-        Signup
+        SignUp: () => import('@/components/AppAuth/AppSignup.vue')
     },
     computed: {
         navItem() {
