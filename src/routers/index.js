@@ -1,12 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import LandingView from '@/views/LandingView'
-import UserView from '@/views/UserView'
 Vue.use(VueRouter)
 
 const routes = [
-    {path: '/tasks', name: 'Landing', component: LandingView},
-    {path: '/', name: 'UserView', component: UserView},
+    {path: '/tasks', name: 'Landing', component: () =>import('@/views/LandingView')},
+    {path: '/', name: 'UserView', component: () => import(/* webpackChunkName: "landing" */ '@/views/UserView')},
 ]
 
 export default new VueRouter({

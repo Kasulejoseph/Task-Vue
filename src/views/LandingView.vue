@@ -1,8 +1,8 @@
 <template>
     <div>
-        <NavBar :navItem="navItem"/>
-        <LandingPage msg="Get your task done.." />
-        <TaskRender />
+        <nav-bar :navItem="navItem"></nav-bar>
+        <landing-page msg="Get your task done.." ></landing-page>
+        <task-render></task-render>
     </div>
 </template>
 
