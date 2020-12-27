@@ -1,5 +1,5 @@
 <template>
-  <v-app slot="signup">
+  <div slot="signup">
     <v-card outlined class="sign-form">
       <div>
         <ValidationObserver rules="required" v-slot="{ valid }">
@@ -45,7 +45,7 @@
       </div>
       <snack-bar :snackbar="snackbar" :color="color" :responseMessage="responseMessage"></snack-bar>
     </v-card>
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -112,8 +112,5 @@ export default {
   padding-top: 18px;
 }
 .sign-form {
-  margin-top: 100px !important;
-  margin: 20%;
-  height: 22%;
 }
 </style>
