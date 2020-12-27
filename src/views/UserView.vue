@@ -1,13 +1,13 @@
 <template>
-    <div>
-    <v-card d-flex align-content-space-around flex-wrap>
+    <v-container class="auth-container">
+    <v-card d-flex align-content-space-around flex-wrap class="auth-card">
         <nav-bar :navItem="navItem" @click="toggleForm"></nav-bar>
         <div>
             <sign-up v-if="slot==='signup'"></sign-up>
             <log-in v-if="slot==='login'"></log-in>
         </div>
     </v-card>
-    </div>
+    </v-container>
 </template>
 <script>
 import NavBar from '@/components/NavBar'
@@ -48,3 +48,12 @@ export default {
     },
 }
 </script>
+ <style scoped>
+ .auth-container {
+    text-align: -webkit-center;
+ }
+ .auth-card {
+    max-width: 90%;
+ }
+ 
+ </style>

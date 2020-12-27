@@ -1,5 +1,5 @@
 <template>
-    <v-app >
+    <div >
      <v-snackbar
       v-model="snackbar"
       :bottom="y === 'bottom'"
@@ -20,7 +20,7 @@
         Close
       </v-btn>
     </v-snackbar>
-    </v-app>
+    </div>
 </template>
 
 <script>

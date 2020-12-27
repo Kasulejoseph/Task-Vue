@@ -1,14 +1,14 @@
 <template>
   <div>
-    <v-card max-width="1300" class="mx-auto" width="1215px" outlined>
+    <v-card max-width="1300" class="mx-auto" width="1215px">
       <div v-if="isItems">
         <v-list three-line>
-          <v-subheader>Complete</v-subheader>
+          <v-subheader>Status</v-subheader>
           <v-list-item-group v-if="items.complete ? selected : selected" multiple>
             <template v-for="(item, index) in items">
               <v-list-item :id="item._id" :key="item.title">
                 <template v-slot:default="{ active, toggle }">
-                  <v-list-item-action>
+                  <v-list-item-action class="list-checkbox">
                     <v-checkbox
                       v-model="item.complete"
                       @change="ischecked(item._id, status=!item.complete)"
@@ -17,7 +17,7 @@
                     ></v-checkbox>
                   </v-list-item-action>
                   <v-list-item-content>
-                    <v-list-item-title class="item-title" v-text="item.complete"></v-list-item-title>
+                    <v-list-item-title class="item-title mb-5" v-text="item.complete? 'completed' : 'pending' "></v-list-item-title>
                     <v-list-item-subtitle class="text--primary" v-text="item.author"></v-list-item-subtitle>
                     <v-list-item-subtitle class="item-subtitle" v-text="item.desc"></v-list-item-subtitle>
                     <v-card-actions>
@@ -42,6 +42,7 @@
           </v-list-item-group>
         </v-list>
       </div>
+      <div v-if="!isItems"> You're yet to have tasks </div>
     </v-card>
   </div>
 </template>
@@ -89,7 +90,7 @@ export default {
         this.millsec = Math.abs(new Date() - new Date(element.createdAt));
       });
       const momentOfTime = moment.duration(this.millsec);
-      this.timePayload = momentOfTime.days() + "days ago";
+      this.timePayload = momentOfTime.days() == 0 ? momentOfTime.minutes() + " minutes ago" : momentOfTime.days() + " days ago";
     }
   }
 };
@@ -108,5 +109,8 @@ export default {
 }
 .item-icon {
   font-size: 80px;
+}
+.list-checkbox {
+  margin-top: 2rem !important;
 }
 </style>
