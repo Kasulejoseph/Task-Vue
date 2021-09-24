@@ -1,50 +1,48 @@
 <template>
-  <div>
-    <v-card max-width="1300" class="mx-auto" width="1215px">
-      <div v-if="isItems">
-        <v-list three-line>
-          <v-subheader>Status</v-subheader>
-          <v-list-item-group v-if="items.complete ? selected : selected" multiple>
-            <template v-for="(item, index) in items">
-              <v-list-item :id="item._id" :key="item.title">
-                <template v-slot:default="{ active, toggle }">
-                  <v-list-item-action class="list-checkbox">
-                    <v-checkbox
-                      v-model="item.complete"
-                      @change="ischecked(item._id, status=!item.complete)"
-                      color="info"
-                      hide-details
-                    ></v-checkbox>
-                  </v-list-item-action>
-                  <v-list-item-content>
-                    <v-list-item-title class="item-title mb-5" v-text="item.complete? 'completed' : 'pending' "></v-list-item-title>
-                    <v-list-item-subtitle class="text--primary" v-text="item.author"></v-list-item-subtitle>
-                    <v-list-item-subtitle class="item-subtitle" v-text="item.desc"></v-list-item-subtitle>
-                    <v-card-actions>
-                      <v-btn class="ml-0 ma-2" color="primary" small dark>
-                        Edit
-                        <v-icon dark>mdi-playlist-edit</v-icon>
-                      </v-btn>
-                      <v-btn @click="deleteTask(item._id)" class="ma-2" color="red" small dark>
-                        delete
-                        <v-icon dark>mdi-delete</v-icon>
-                      </v-btn>
-                    </v-card-actions>
-                  </v-list-item-content>
+  <v-card class="container">
+    <div v-if="isItems">
+      <v-list three-line>
+        <v-subheader>Status</v-subheader>
+        <v-list-item-group v-if="items.complete ? selected : selected" multiple>
+          <template v-for="(item, index) in items">
+            <v-list-item :id="item._id" :key="item.title">
+              <template v-slot:default="{ active, toggle }">
+                <v-list-item-action class="list-checkbox">
+                  <v-checkbox
+                    v-model="item.complete"
+                    @change="ischecked(item._id, status=!item.complete)"
+                    color="info"
+                    hide-details
+                  ></v-checkbox>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title class="item-title mb-5" v-text="item.complete? 'completed' : 'pending' "></v-list-item-title>
+                  <v-list-item-subtitle class="text--primary" v-text="item.author"></v-list-item-subtitle>
+                  <v-list-item-subtitle class="item-subtitle overflow-auto" v-text="item.desc"></v-list-item-subtitle>
+                  <v-card-actions>
+                    <v-btn class="ml-0 ma-2" color="primary" small dark>
+                      Edit
+                      <v-icon dark>mdi-playlist-edit</v-icon>
+                    </v-btn>
+                    <v-btn @click="deleteTask(item._id)" class="ma-2" color="red" small dark>
+                      delete
+                      <v-icon dark>mdi-delete</v-icon>
+                    </v-btn>
+                  </v-card-actions>
+                </v-list-item-content>
 
-                  <v-list-item-action>
-                    <v-list-item-action-text v-text="createdAt"></v-list-item-action-text>
-                  </v-list-item-action>
-                </template>
-              </v-list-item>
-              <v-divider v-if="index + 1 < items.length" :key="index"></v-divider>
-            </template>
-          </v-list-item-group>
-        </v-list>
-      </div>
-      <div v-if="!isItems"> You're yet to have tasks </div>
-    </v-card>
-  </div>
+                <v-list-item-action>
+                  <v-list-item-action-text v-text="createdAt"></v-list-item-action-text>
+                </v-list-item-action>
+              </template>
+            </v-list-item>
+            <v-divider v-if="index + 1 < items.length" :key="index"></v-divider>
+          </template>
+        </v-list-item-group>
+      </v-list>
+    </div>
+    <div v-if="!isItems"> You're yet to have tasks </div>
+  </v-card>
 </template>
 
 <script>

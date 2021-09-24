@@ -2,7 +2,7 @@
   <v-container>
     <v-btn @click="showForm" class="ma-2" color="primary" dark>
       Add
-      <v-icon dark right>mdi-plus-box</v-icon>
+      <span class="material-icons"></span>
     </v-btn>
     <v-card class="mx-auto mt-5" max-width="100%" outlined v-show="isFormOpen">
       <ValidationObserver rules="required" v-slot="{ valid }">
