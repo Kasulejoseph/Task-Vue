@@ -1,24 +1,7 @@
 <template>
-  <v-content class="landing">
-    <v-container>
-      <v-row no-gutters>
-        <!-- <v-col
-        cols="12"
-        md="8"
-        > -->
-        <add-task ></add-task>
-        <!-- </v-col>
-        <v-col
-        cols="12"
-        md=""
-      >
-      <h1 class="text-center">{{ msg }}</h1>
-        </v-col> -->
-        <!-- <v-col>
-        </v-col> -->
-      </v-row>
-    </v-container>
-  </v-content>
+  <v-container>
+    <add-task ></add-task>
+  </v-container>
 </template>
 <script>
 export default {
@@ -34,7 +17,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.landing {
-  padding: 15px 0px 0px !important;
-}
 </style>
